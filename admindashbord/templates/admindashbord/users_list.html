@@ -1,0 +1,575 @@
+{% extends 'admindashbord/base.html' %}
+
+
+{% block user_list %}
+<div class="menu-item " >
+    <!--begin:Menu link-->
+    <a class="menu-link active" href="{% url 'admindashbord:users_list' %}" >
+        <span class="menu-icon">
+    
+            <i class="bi bi-person-circle"></i>
+        </span>
+        <span class="menu-title">لیست کاربران</span>
+    </a>
+    <!--end:Menu link-->
+</div>
+    
+{% endblock user_list %}
+    
+    
+{% block content %}
+{% load static %}
+
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <!--begin::Toolbar-->
+    <div class="toolbar" id="kt_toolbar">
+        <!--begin::Container-->
+        <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+            <!--begin::Page title-->
+            <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center me-3 flex-wrap mb-5 mb-lg-0 lh-1">
+                <!--begin::Title-->
+                <h1 class="d-flex align-items-center text-dark fw-bold my-1 fs-3">کاربران لیست</h1>
+                <!--end::Title-->
+                <!--begin::Separator-->
+                <span class="h-20px border-gray-200 border-start mx-4"></span>
+                <!--end::Separator-->
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-1">
+                    <!--begin::آیتم-->
+                    <li class="breadcrumb-item text-muted">
+                        <a href="{% url 'admindashbord:home_page' %}" class="text-muted text-hover-primary">خانه</a>
+                    </li>
+                    <!--end::آیتم-->
+                    <!--begin::آیتم-->
+ 
+                    <!--begin::آیتم-->
+          
+                    <!--end::آیتم-->
+                    <!--begin::آیتم-->
+               
+                    <!--end::آیتم-->
+                    <!--begin::آیتم-->
+              
+                    <!--end::آیتم-->
+                    <!--begin::آیتم-->
+                    <li class="breadcrumb-item">
+                        <span class="bullet bg-gray-200 w-5px h-2px"></span>
+                    </li>
+                    <!--end::آیتم-->
+                    <!--begin::آیتم-->
+                    <li class="breadcrumb-item text-dark">کاربران لیست</li>
+                    <!--end::آیتم-->
+                </ul>
+                <!--end::Breadcrumb-->
+            </div>
+            <!--end::Page title-->
+            <!--begin::Actions-->
+       
+            <!--end::Actions-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Toolbar-->
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::کارت-->
+            <div class="card">
+                <!--begin::کارت header-->
+                <div class="card-header border-0 pt-6">
+                    <!--begin::کارت title-->
+                    <div class="card-title">
+                        <!--begin::جستجو-->
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                            <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                            <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="جستجو کاربر" />
+                        </div>
+                        <!--end::جستجو-->
+                    </div>
+                    <!--begin::کارت title-->
+                    <!--begin::کارت toolbar-->
+                    <div class="card-toolbar">
+                        <!--begin::Toolbar-->
+                        <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+                            <!--begin::فیلتر-->
+                          
+                            <!--begin::Menu 1-->
+               
+                            <!--end::Menu 1-->
+                            <!--end::فیلتر-->
+                            <!--begin::خروجی-->
+                        
+                            <!--end::خروجی-->
+                            <!--begin::Add user-->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
+                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+                            <span class="svg-icon svg-icon-2">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor" />
+                                    <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->افزودن کاربر</button>
+                            <!--end::Add user-->
+                        </div>
+                        <!--end::Toolbar-->
+                        <!--begin::گروه actions-->
+                        <div class="d-flex justify-content-end align-items-center d-none" data-kt-user-table-toolbar="selected">
+                            <div class="fw-bold me-5">
+                            <span class="me-2" data-kt-user-table-select="selected_count"></span>انتخاب شده</div>
+                            <button type="button" class="btn btn-danger" data-kt-user-table-select="delete_selected">حذف انتخاب شده</button>
+                        </div>
+                        <!--end::گروه actions-->
+                        <!--begin::Modal - Adjust تعادل-->
+            
+                        <!--end::Modal - کارت جدید-->
+                        <!--begin::Modal - Add task-->
+                        <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
+                            <!--begin::Modal dialog-->
+                            <div class="modal-dialog modal-dialog-centered mw-650px">
+                                <!--begin::Modal content-->
+                                <div class="modal-content">
+                                    <!--begin::Modal header-->
+                                    <div class="modal-header" id="kt_modal_add_user_header">
+                                        <!--begin::Modal title-->
+                                        <h2 class="fw-bold">افزودن کاربر</h2>
+                                        <!--end::Modal title-->
+                                        <!--begin::Close-->
+                                        <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                            <span class="svg-icon svg-icon-1"  onclick="CloseModal()">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                                </svg>
+                                            </span>
+                                            <!--end::Svg Icon-->
+                                        </div>
+                                        <!--end::Close-->
+                                    </div>
+                                    <!--end::Modal header-->
+                                    <!--begin::Modal body-->
+                                    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7" id ="create_user_modal">
+                                        <!--begin::Form-->
+                                        <form id="modal-form" class="form" method="post" action="{% url 'admindashbord:craete_user' %}">
+                                            <!--begin::Scroll-->
+                                            <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+                                                <!--begin::Input group-->
+                                                <div class="fv-row mb-7">
+                                                    <!--begin::Tags-->
+                                 
+                                                    <!--end::Tags-->    
+                                                    <!--begin::Image placeholder-->
+                                        
+                                                    <!--end::Image placeholder-->
+                                                    <!--begin::Image input-->
+                                          
+                                                    <!--begin::Hint-->
+                
+                                                    <!--end::Hint-->
+                                                </div>
+                                                <!--end::Input group-->
+                                                <!--begin::Input group-->
+                                                <div class="row">
+                                                <div class="col-md-6">
+                                                    <!--begin::Tags-->
+                                                    <label class="required fw-semibold fs-6 mb-2">نام </label>
+                                                    <!--end::Tags-->
+                                                    <!--begin::Input-->
+                                                    <input type="text" name="first_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="نام" />
+                                                    <!--end::Input-->
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <!--begin::Tags-->
+                                                    <label class="required fw-semibold fs-6 mb-2"> نام  خانوادگی </label>
+                                                    <!--end::Tags-->
+                                                    <!--begin::Input-->
+                                                    <input type="text" name="last_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="نام خانوادگی"/>
+                                                    <!--end::Input-->
+                                                </div>
+                                            </div>
+                                                <!--end::Input group-->
+                                                <!--begin::Input group-->
+                                                <div class="fv-row mb-7" id="user_check">
+                                                    <!--begin::Tags-->
+                                                    <label class="required fw-semibold fs-6 mb-2">نام کاربری</label>
+                                                    <!--end::Tags-->
+                                                    <!--begin::Input-->
+                                                    <input type="username" name="username" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="نام کاربری" />
+                                                    <!--end::Input-->
+                                                </div>
+                                                <div class="fv-row mb-7" id="user_check">
+                                                    <!--begin::Tags-->
+                                                    <label class="required fw-semibold fs-6 mb-2">شماره تلفن</label>
+                                                    <!--end::Tags-->
+                                                    <!--begin::Input-->
+                                                    <input type="text" name="phone_nmber" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="شماره تلفن" />
+                                                    <!--end::Input-->
+                                                </div>
+                                                <div class="fv-row mb-7" id="user_check">
+                                                    <!--begin::Tags-->
+                                                    <label class="required fw-semibold fs-6 mb-2">سطح دسترسی</label>
+                                                    <select name="user_type" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="انتخاب...">
+                                                        <option value="مدیر">مدیر</option>
+                                                        <option value="کال سنتر">کال سنتر</option>
+                                                    </select>
+                                                </div>
+                                                {% csrf_token %}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <!--begin::Tags-->
+                                                        <label class="required fw-semibold fs-6 mb-2">رمز عبور </label>
+                                                        <!--end::Tags-->
+                                                        <!--begin::Input-->
+                                                        <input type="password" name="password" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="رمزعبور"  />
+                                                        <!--end::Input-->
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <!--begin::Tags-->
+                                                        <label class="required fw-semibold fs-6 mb-2">تایید رمز عبور</label>
+                                                        <!--end::Tags-->
+                                                        <!--begin::Input-->
+                                                        <input type="password" name="confirm_password" class="form-control form-control-solid mb-3 mb-lg-0" placeholder=" تایید رمزعبور"  />
+                                                        <!--end::Input-->
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <!--begin::Tags-->
+                                                        <label class="required fw-semibold fs-6 mb-2">وضعیت</label>
+                                                        <label class="form-check form-switch form-check-custom form-check-solid">
+                                                            <input type="checkbox" name="is_active" class="form-check-input" checked="checked">
+                                                        </label>
+                                                        <!--end::Input-->
+                                                    </div>
+                                                </div>
+                                             
+                                                <!--end::Input group-->
+                                                <!--begin::Input group-->
+                                         
+                                                <!--end::Input group-->
+                                            </div>
+                                            <!--end::Scroll-->
+                                            <!--begin::Actions-->
+                                            <div class="text-center pt-15">
+                                                <button type="reset" class="btn btn-light me-3" onclick="CloseModal()"  data-kt-users-modal-action="cancel">لغو</button>
+                                                <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit" id="submit-modal-form">
+                                                    <span class="indicator-label">ثبت</span>
+                                                    <span class="indicator-progress">لطفا صبر کنید...
+                                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                </button>
+                                            </div>
+                                            <!--end::Actions-->
+                                        </form>
+                                        <!--end::Form-->
+                                    </div>
+                                    <!--end::Modal body-->
+                                </div>
+                                <!--end::Modal content-->
+                            </div>
+                            <!--end::Modal dialog-->
+                        </div>
+                        <!--end::Modal - Add task-->
+                    </div>
+                    <!--end::کارت toolbar-->
+                </div>
+                <!--end::کارت header-->
+                <!--begin::کارت body-->
+                <div class="card-body py-4">
+                    <!--begin::Table-->
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_کاربران">
+                        <!--begin::Table head-->
+                        <thead>
+                            <!--begin::Table row-->
+                            <tr >
+                 
+                      
+
+
+                                <th class="min-w-70px">شناسه</th>
+                                <th class="min-w-125px">نام و نام خانوادگی</th>
+                                <th class="min-w-125px">شماره تلفن</th>
+                                <th class="min-w-125px">تاریخ ثبت نام</th>
+                                <th class="min-w-70px">دسترسی</th>
+                                <th class="min-w-70px">وضعیت</th>
+                                <th class="min-w-70px">عملیات</th>
+                               
+                              
+                            </tr>
+                            <!--end::Table row-->
+                        </thead>
+                        <!--end::Table head-->
+                        <!--begin::Table body-->
+                        <tbody class="text-gray-600 fw-semibold" id="user_table">
+                      
+                            <!--end::Table row-->
+                        
+                            {% for user in users %}
+                                
+                            
+                                
+
+                                <tr id="row{{user.id}}">
+                 
+                                    <td>
+                                        {{user.id}}
+                                    </td>
+                                    <td>
+                                        {{user.firstname}}   {{user.lastname}}
+                                    </td>
+                                   
+                                    <td>
+                                        {{user.phone_number}}
+                                    </td>
+                                    <td>
+                                        {{user.created_data}}
+                                    </td>
+                                    <td>
+                                        <div class="badge badge-light-success">{{user.user_type}}</div>
+                                    </td>
+                                    <td>
+                                        
+                                        {% if user.is_active %}
+                                        <label class="form-check form-switch form-check-custom form-check-solid">
+                                            <input type="checkbox" class="form-check-input" checked="checked" onclick="Status(this)" value="{{user.id}}">
+                                        </label>
+                                        
+                                        {% else %}
+                       
+                                        <label class="form-check form-switch form-check-custom form-check-solid">
+                                            <input type="checkbox" class="form-check-input" onclick="Status(this)"  value="{{user.id}}">
+                                        </label>
+
+                                        {% endif %}
+                                            
+                                    </td>
+                           
+                                    <td>
+                                   
+                                        <a  onclick="DeleteUser({{user.id}})"class="btn btn-sm btn-clean btn-icon mr-2">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon mr-2" data-bs-toggle="modal" data-bs-target="#kt_modal_edit_user{{user.id}}">
+                                         <input type="hidden" id="deletedurl{{user.id}}" value="{% url 'admindashbord:delete_user' user.id %}">
+                                            
+                                            </span>
+                                            <i class="bi bi-pencil-square" ></i>
+
+                                           </button>
+                    
+                                    </td>
+                            
+                                  
+                                    <!-- edit modal begin  -->
+                                    <div class="modal fade" id="kt_modal_edit_user{{user.id}}" tabindex="-1" aria-hidden="true">
+                                        <!--begin::Modal dialog-->
+                                        <div class="modal-dialog modal-dialog-centered mw-650px">
+                                            <!--begin::Modal content-->
+                                            <div class="modal-content">
+                                                <!--begin::Modal header-->
+                                                <div class="modal-header" id="kt_modal_add_user_header">
+                                                    <!--begin::Modal title-->
+                                                    <h2 class="fw-bold">افزودن کاربر</h2>
+                                                    <!--end::Modal title-->
+                                                    <!--begin::Close-->
+                                                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                                        <span class="svg-icon svg-icon-1"  onclick="CloseEditModal({{user.id}})">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                                            </svg>
+                                                        </span>
+                                                        <!--end::Svg Icon-->
+                                                    </div>
+                                                    <!--end::Close-->
+                                                </div>
+                                                <!--end::Modal header-->
+                                                <!--begin::Modal body-->
+                                                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7" id ="create_user_modal">
+                                                    <!--begin::Form-->
+                                                    <form id="edit-modal-form{{user.id}}" class="form" action="{% url 'admindashbord:edit_user' user.id %}">
+                                                        <!--begin::Scroll-->
+                                                        <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+                                                            <!--begin::Input group-->
+                                                            <div class="fv-row mb-7">
+                                                                <!--begin::Tags-->
+                                             
+                                                                <!--end::Tags-->    
+                                                                <!--begin::Image placeholder-->
+                                                    
+                                                                <!--end::Image placeholder-->
+                                                                <!--begin::Image input-->
+                                                      
+                                                                <!--begin::Hint-->
+                            
+                                                                <!--end::Hint-->
+                                                            </div>
+                                                            <!--end::Input group-->
+                                                            <!--begin::Input group-->
+                                                            <div class="row">
+                                                            <div class="col-md-6">
+                                                                <!--begin::Tags-->
+                                                                <label class="required fw-semibold fs-6 mb-2">نام </label>
+                                                                <!--end::Tags-->
+                                                                <!--begin::Input-->
+                                                                <input type="text" name="first_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Full name" value="{{user.firstname}}" />
+                                                                <!--end::Input-->
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <!--begin::Tags-->
+                                                                <label class="required fw-semibold fs-6 mb-2"> نام و خانوادگی </label>
+                                                                <!--end::Tags-->
+                                                                <!--begin::Input-->
+                                                                <input type="text" name="last_name" class="form-control form-control-solid mb-3  mb-lg-0" placeholder="Full name" value="{{user.lastname}}" />
+                                                                <!--end::Input-->
+                                                            </div>
+                                                        </div>
+                                                            <!--end::Input group-->
+                                                            <!--begin::Input group-->
+                                                            <div class="fv-row mb-7" id="user_check">
+                                                                <!--begin::Tags-->
+                                                                <label class="required fw-semibold fs-6 mb-2">نام کاربری</label>
+                                                                <!--end::Tags-->
+                                                                <!--begin::Input-->
+                                                                <input type="username" name="username" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="نام کاربری" value="{{user.username}}" />
+                                                                <!--end::Input-->
+                                                            </div>
+                                                            <div class="fv-row mb-7" id="user_check">
+                                                                <!--begin::Tags-->
+                                                                <label class="required fw-semibold fs-6 mb-2">شماره تلفن</label>
+                                                                <!--end::Tags-->
+                                                                <!--begin::Input-->
+                                                                <input type="text" name="phone_nmber" value="{{user.phone_number}}" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="شماره تلفن" />
+                                                                <!--end::Input-->
+                                                            </div>
+                                                            <div class="fv-row mb-7" id="user_check">
+                                                                <!--begin::Tags-->
+                                                                <label class="required fw-semibold fs-6 mb-2">سطح دسترسی</label>
+                                                                <select name="user_type" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="انتخاب...">
+
+                                                                    
+                                                                    {% if user.user_tyep == "مدیر" %}
+                                                                        
+                                                                    <option value="مدیر" selected>مدیر</option>
+                                                                    <option value="کال سنتر">کال سنتر</option>
+                                                                    {% else %}
+                                                                    <option value="مدیر" >مدیر</option>
+                                                                    <option value="کال سنتر"  selected>کال سنتر</option>
+
+                                                                    {% endif %}
+                                                                    
+                                                                        
+                                                                </select>
+                                                            </div>  
+                                                            {% csrf_token %}
+                                                            <div class="row">
+                                                            
+                                                                <div class="col-md-1">
+                                                                    <!--begin::Tags-->
+                                                                    <label class="required fw-semibold fs-6 mb-2">وضعیت</label>
+                                                                    <label class="form-check form-switch form-check-custom form-check-solid">
+                                                                        
+                                                                        {% if user.is_active %}
+                                                                            
+                                                                        
+                                                                        <input type="checkbox" name="is_active" class="form-check-input"checked="checked">
+                                                                        {% else %}
+                                                                        <input type="checkbox" name="is_active" class="form-check-input"  >
+
+                                                                        {% endif %}
+                                                                    </label>
+                                                                    <!--end::Input-->
+                                                                </div>
+                                                            </div>
+                                                         
+                                                            <!--end::Input group-->
+                                                            <!--begin::Input group-->
+                                                     
+                                                            <!--end::Input group-->
+                                                        </div>
+                                                        <!--end::Scroll-->
+                                                        <!--begin::Actions-->
+                                                        <div class="text-center pt-15">
+                                                            <button type="reset" class="btn btn-light me-3" onclick="CloseEditModal({{user.id}})"  data-kt-users-modal-action="cancel">لغو</button>
+                                                            <button type="button" class="btn btn-primary" data-kt-users-modal-action="submit" value="{{user.id}}" id="submit_edit_user{{user.id}}" onclick="EditUser({{user.id}})">
+                                                                <span class="indicator-label">ثبت</span>
+                                                                <span class="indicator-progress">لطفا صبر کنید...
+                                                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                            </button>
+                                                        </div>
+                                                        <!--end::Actions-->
+                                                    </form>
+                                                    <!--end::Form-->
+                                                </div>
+                                                <!--end::Modal body-->
+                                            </div>
+                                            <!--end::Modal content-->
+                                        </div>
+                                        <!--end::Modal dialog-->
+                                    </div>
+                                    <!-- end edit modal -->
+                                </tr>
+                            {% endfor %}
+                            <!--end::Table row-->
+                    
+                            <!--end::Table row-->
+                        </tbody>
+                        <!--end::Table body-->
+                    </table>
+                    <!--end::Table-->
+                </div>
+                <!--end::کارت body-->
+            </div>
+            <!--end::کارت-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Post-->
+</div>
+{% endblock content %}
+
+{% block js %}
+{% load static %}
+<script src="{% static 'metronic_template/js/custom/apps/user-management/users/list/table.js' %}"></script>
+<script src="{% static 'metronic_template/js/custom/apps/user-management/users/list/export-users.js' %}"></script>
+<script src="{% static 'metronic_template/js/custom/apps/user-management/users/list/add.js' %}"></script>
+<script src="{% static 'metronic_template/js/widgets.bundle.js' %}"></script>
+<script src="{% static 'metronic_template/js/custom/widgets.js' %}"></script>
+<script src="{% static 'metronic_template/js/custom/apps/chat/chat.js' %}"></script>
+<script src="{% static 'metronic_template/js/custom/utilities/modals/upgrade-plan.js' %}"></script>
+<script src="{% static 'metronic_template/js/custom/utilities/modals/create-app.js' %}"></script>
+<script src="{% static 'metronic_template/js/custom/utilities/modals/users-search.js' %}"></script>
+<script src="{% static 'metronic_template/js/createuser.js' %}"></script>
+<script type="text/Javascript">
+    function Status(query) {
+        if(query.checked){
+            $.ajax( {
+                    url : `/admindashboard/change_status_user/${query.value}`,
+                    method : "GET",
+                    data :{
+                        checked: true,
+                    }
+                    })
+        }else{
+            $.ajax( {
+                    url : `/admindashboard/change_status_user/${query.value}`,
+                    method : "GET",
+                    data :{
+                        checked: false,
+                    }
+                    })
+        }
+        
+    }
+
+</script>
+{% endblock js %}
+    

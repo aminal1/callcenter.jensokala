@@ -377,6 +377,9 @@ button:not(:disabled),
 [type=submit]:not(:disabled) {
   cursor: pointer;
 }
+.logo_login{
+
+  }
 
 ::-moz-focus-inner {
   padding: 0;
@@ -34747,7 +34750,9 @@ code:not([class*=language-]) {
   color: inherit;
   height: inherit;
   min-height: inherit;
+  text-align: center;
 }
+
 .table tr:first-child, .table th:first-child, .table td:first-child {
   padding-right: 0;
 }
