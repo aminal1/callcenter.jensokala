@@ -1,0 +1,282 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html dir="rtl">
+
+<!-- Mirrored from clients.siconet.ir/iono/register4.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 01 Jul 2022 08:53:08 GMT -->
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href=" {% static 'images/jm/logojm.png' %} " type="image/x-icon">
+	<title>J & M</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/farsi-font.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+
+
+	<link rel="stylesheet" type="text/css" href="{% static 'hasan/css/fontawesome-all.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'hasan/css/iofrm-style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'hasan/css/iofrm-theme4.css' %}">
+
+
+
+</head>
+
+
+<div class="header">
+	<div class="header-right">
+
+		<a href="{% url 'login:rules'%}" target="_blank">قوانین و مقررات</a>
+
+
+		<a href="{% url 'login:abut_us_url'%}" target="_blank"> درباره ما</a>
+
+
+		<a href="{% url 'login:contact_us'%}" target="_blank"> تماس با ما</a>
+
+
+	</div>
+</div>
+
+<body>
+	<div class="form-body" class="container-fluid">
+		<div class="website-logo">
+			<a href="">
+
+
+				<img class="logo-size" src="{% static 'images/jm/logojm.png' %}" alt="">
+
+			</a>
+
+
+
+		</div>
+		<div class="row">
+			<div class="img-holder">
+				<div class="bg"></div>
+				<div class="info-holder">
+					<img src="{% static 'images/graphic1.svg' %}" alt="">
+				</div>
+			</div>
+			<div class="form-holder">
+				<div class="form-content">
+					<div class="form-items">
+						{% comment %} <p>سیستم دراپ شیپینگ ما (JMwear) با هدف تسهیل کسب و کارهای اینترنتی و تامین کالا،
+							پروسه ارسال و همه حوزه های وابسته به این حوزه ایجاد گردیده است.
+							برای ورود به سیستم ابتدا باید (ثبت نام) صورت گیرد و پس از بررسی گروه ما پنل فعال میگردد و
+							شما میتوانید از خدمات ما بهره برداری نمایید.</p>
+						</p> {% endcomment %}
+						<div class="page-links">
+							<a href="{%url 'login:userlogin'%}">ورود</a>
+							<a href="/register/registerusers" class="active">عضویت</a>
+
+							<br>
+							<br>
+
+						</div>
+						<span class="text-danger">{{eror}}</span>
+						<form method="post">
+							{% csrf_token %}
+							{{form.fullname}}
+							
+							<span class="text-danger nameerror"></span>
+							<br>
+							{{form.phone_number}}
+							<span class="text-danger phoneError"></span>
+							<br>
+							<input type="password"  name = "password1" class="form-control mb-1" id="password1" placeholder="رمز عبور">
+							<span class="text-danger passeror1text" id="text1"></span>
+							<br>
+							<input type="password"  name = "password2" class="form-control mb-1" id="password2"  placeholder="تکرار رمز عبور">
+							<span class="text-danger passeror2text"></span>
+							<br>
+							<select id="car" onchange="ChangeCarList()" name="ostan"class="form-select form-select-solid select2-hidden-accessible">
+
+								<option value="لطفا استان را انتخاب نمایید">لطفا استان را انتخاب نمایید</option>
+								<option value="تهران">تهران</option>
+								<option value="گیلان">گیلان</option>
+								<option value="آذربایجان شرقی">آذربایجان شرقی</option>
+								<option value="خوزستان">خوزستان</option>
+								<option value="فارس">فارس</option>
+								<option value="اصفهان">اصفهان</option>
+								<option value="خراسان رضوی">خراسان رضوی</option>
+								<option value="قزوین">قزوین</option>
+								<option value="سمنان">سمنان</option>
+								<option value="قم">قم</option>
+								<option value="مرکزی">مرکزی</option>
+								<option value="زنجان">زنجان</option>
+								<option value="مازندران">مازندران</option>
+								<option value="گلستان">گلستان</option>
+								<option value="اردبیل">اردبیل</option>
+								<option value="آذربایجان غربی">آذربایجان غربی</option>
+								<option value="همدان">همدان</option>
+								<option value="کردستان">کردستان</option>
+								<option value="کرمانشاه">کرمانشاه</option>
+								<option value="لرستان">لرستان</option>
+								<option value="بوشهر">بوشهر</option>
+								<option value="کرمان">کرمان</option>
+								<option value="هرمزگان">هرمزگان</option>
+								<option value="چهارمحال و بختیاری">چهارمحال و بختیاری</option>
+								<option value="یزد">یزد</option>
+								<option value="سیستان و بلوچستان">سیستان و بلوچستان</option>
+								<option value="ایلام">ایلام</option>
+								<option value="کهگلویه و بویراحمد">کهگلویه و بویراحمد</option>
+								<option value="خراسان شمالی">خراسان شمالی</option>
+								<option value="خراسان جنوبی">خراسان جنوبی</option>
+								<option value="البرز">البرز</option>
+							</select>
+							<br>
+							<select id="carmodel" name="city" class="form-control"
+                            class="form-select form-select-solid select2-hidden-accessible">
+								<option value="">لطفا استان خود را انتخاب کنید</option>
+							</select>
+							<br>
+							<!-- {{form.store_name}} -->
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" required>
+								<label class="form-check-label" for="flexCheckChecked">
+									تمام قوانین را مطالعه کردم و میپذیرم <a type="button" data-toggle="modal"
+										data-target="#exampleModalLong">
+										<span style="color:red">قوانین </span>
+									</a>
+
+								</label>
+							</div>
+
+							<!-- Button trigger modal -->
+
+
+							<!-- Modal -->
+							<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+								aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLongTitle">قوانین عضویت </h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											شرایط کلی عضویت در سیستم jmwear.net به شرح موارد ذیل بوده و کلیه همکاران
+											ملزم و متعهد به انجام کامل مفاد آن می باشند.
+											<br><br>
+											1- عضویت هر شخص حقیقی یا حقوقی در سیستم jmwear.net به معنای مطالعه و قبول
+											کلیه شرایط این توافقنامه میباشد و پس از عضویت نمی تواند به دلایلی از قبیل
+											جهل به قوانین و عدم محاسبه کافی از تایید آن سر باز زند.
+											<br><br>
+											2- همکار باید از ارائه هر گونه مطلب و عکس غیر اخلاقی و مغایر با شئون نظام
+											جمهوری اسلامی ایران و شرع مقدس اسلام در سایتها جدا پرهیز نماید.
+											<br><br>
+											3- همکار نباید برای هیچ سایت غیر اخلاقی و یا فیلتر شده تبلیغ نماید.
+											<br><br>
+											4- همکار باید قوانین کپی رایت داخلی و بین المللی و حقوق مولف و مصنف را رعایت
+											نماید.
+											<br><br>
+											5- سیستم در هر زمان میتواند فعالیت خود را به حالت تعلیق درآورد.
+											<br><br>
+											6- در صورت عدم رعایت قوانین و مقررات سیستم از جانب همکار، مسئولیت پاسخگویی و
+											یا عندالزوم جبران خسارت بر عهده همکار میباشد.
+
+										</div>
+										<div class="modal-footer">
+											{% comment %} <button type="button" class="btn btn-secondary"
+												data-dismiss="modal">Close</button> {% endcomment %}
+											<button type="button" class="btn btn-primary" data-dismiss="modal"
+												aria-label="Close">قبول</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-button">
+								<button id="submit" type="submit" class="ibtn">عضویت</button>
+							</div>
+						</form>
+
+						<div class="other-links">
+
+						</div>
+						<div class="enamad-tag">
+							<a referrerpolicy="origin" target="_blank"
+								href="https://trustseal.enamad.ir/?id=278131&amp;Code=CIlg42LSTiBBDcmx3b5D">
+								<img referrerpolicy="origin" src="{% static 'hasan/enamad.png' %}"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+	<script type="text/javascript" src="{% static 'hasan/city.js' %}"></script>
+	<script type="text/javascript" src="{% static 'supurter_static/js/passvalidate.js' %}"></script>
+	<script type="text/javascript">
+		$('#phoneField').keyup(function () {
+			let value = $(this).val();
+			if ($(this).hasClass('is-invalid')) {
+				$(this).removeClass('is-invalid')
+			}
+
+			if ($(this).hasClass('is-valid')) {
+				$(this).removeClass('is-valid')
+			}
+
+			$('.phoneError').empty();
+			if (value != '') {
+				let validformat = new RegExp('^(09)\\d{9}$');
+				if (!validformat.test($.trim(value))) {
+					$(this).addClass('is-invalid')
+					$('.phoneError').text('   شماره تماس باید با 09 شروع بشود مثال:09121231231,حتما از حروف لاتین استفاده کنید'); 
+				} else {
+					if ($(this).hasClass('is-invalid')) {
+						$(this).removeClass('is-invalid')
+					}
+					$(this).addClass('is-valid')
+					$('.phoneError').empty();
+				}
+			} else {
+				$(this).addClass('is-invalid')
+				$('.phoneError').text('شماره تماس را وارد کنید.');
+			}
+		});
+
+		$('#fullname').keyup(function () {
+			let value = $(this).val();
+			if ($(this).hasClass('is-invalid')) {
+				$(this).removeClass('is-invalid')
+			}
+	
+			if ($(this).hasClass('is-valid')) {
+				$(this).removeClass('is-valid')
+			}
+	
+			$('.nameerror').empty();
+			if (value != '') {
+				let validformat = new RegExp('^[\u0600-\u06FF ]+$');
+				if (validformat.test($.trim(value))) {
+					$(this).addClass('is-invalid')
+					$('.nameerror').text('نام کاربری شما باید با حروف لاتین بدون عدد و کاراکتر های خاص باشد');
+				} else {
+					if ($(this).hasClass('is-invalid')) {
+						$(this).removeClass('is-invalid')
+					}
+					$(this).addClass('is-valid')
+					$('.nameerror').empty();
+				}
+			} else {
+				$(this).addClass('is-invalid')
+				$('.nameerror').text('نام و نام خانوادگی را وارد کنید.');
+			}
+		});
+
+	</script>
+
+</body>
+
+<!-- Mirrored from clients.siconet.ir/iono/register4.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 01 Jul 2022 08:53:08 GMT -->
+
+</html>

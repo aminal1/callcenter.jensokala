@@ -41,7 +41,7 @@ $("#submit-modal-form").click(function(event) {
                     text: "کاربر مورد نظر با موفقیت ثبت شد",
                     icon: "success",
                     buttonsStyling: true,
-                    confirmButtonText: "Ok, got it!",
+                    confirmButtonText: "باشه",
                     customClass: {
                         confirmButton: "btn btn-primary"
                     }

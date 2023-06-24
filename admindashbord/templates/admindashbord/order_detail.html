@@ -1,0 +1,1483 @@
+{% extends 'admindashbord/base.html' %}
+{% block order_list %}
+
+
+
+<div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
+    <!--begin:Menu link-->
+    <span class="menu-link">
+        <span class="menu-icon">
+            <i class="bi bi-grid fs-3"></i>
+        </span>
+        <span class="menu-title">سفارشات</span>
+        <span class="menu-arrow"></span>
+    </span>
+    <!--end:Menu link-->
+    <!--begin:Menu sub-->
+
+    <div class="menu-sub menu-sub-accordion">
+        <!--begin:Menu item-->
+        <div class="menu-item">
+            <!--begin:Menu link-->
+            <a class="menu-link " href="{% url 'admindashbord:order_list' %}">
+                <span class="menu-bullet">
+                    <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">لیست سفارشات</span>
+            </a>
+            <!--end:Menu link-->
+        </div>
+
+        <!--end:Menu item-->
+        <!--begin:Menu item-->
+
+    </div>
+    <!--end:Menu sub-->
+</div>
+{% endblock order_list %}
+{% block content %}
+<input type="hidden" id="rurl_pro_to_order" value="{% url 'admindashbord:add_product_to_order' order.refrence_id %}">
+<input type="hidden" id="change_status_order" value="{% url 'admindashbord:change_status_order' order.refrence_id %}">
+<input type="hidden" id="change_call_status_order" value="{% url 'admindashbord:change_call_status_order' order.refrence_id %}">
+<input type="hidden" id="create_addres_order" value="{% url 'admindashbord:create_addres_order' order.refrence_id %}">
+<input type="hidden" id="status_created" value="false">
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <!--begin::Toolbar-->
+    <div class="toolbar" id="kt_toolbar">
+        <!--begin::Container-->
+        <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+            <!--begin::Page title-->
+            <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
+                data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
+                class="page-title d-flex align-items-center me-3 flex-wrap mb-5 mb-lg-0 lh-1">
+                <!--begin::Title-->
+                <h1 class="d-flex align-items-center text-dark fw-bold my-1 fs-3">جزییات سفارش</h1>
+                <!--end::Title-->
+                <!--begin::Separator-->
+                <span class="h-20px border-gray-200 border-start mx-4"></span>
+                <!--end::Separator-->
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-1">
+                    <!--begin::آیتم-->
+                    <li class="breadcrumb-item text-muted">
+                        <a href="../../demo13/dist/index.html" class="text-muted text-hover-primary">خانه</a>
+                    </li>
+                    <!--end::آیتم-->
+                    <!--begin::آیتم-->
+                    <li class="breadcrumb-item">
+                        <span class="bullet bg-gray-200 w-5px h-2px"></span>
+                    </li>
+                    <!--end::آیتم-->
+                    <!--begin::آیتم-->
+                    <li class="breadcrumb-item text-muted">تجارت الکترونیک</li>
+                    <!--end::آیتم-->
+                    <!--begin::آیتم-->
+                    <li class="breadcrumb-item">
+                        <span class="bullet bg-gray-200 w-5px h-2px"></span>
+                    </li>
+                    <!--end::آیتم-->
+                    <!--begin::آیتم-->
+                    <li class="breadcrumb-item text-muted">فروش</li>
+                    <!--end::آیتم-->
+                    <!--begin::آیتم-->
+                    <li class="breadcrumb-item">
+                        <span class="bullet bg-gray-200 w-5px h-2px"></span>
+                    </li>
+                    <!--end::آیتم-->
+                    <!--begin::آیتم-->
+                    <li class="breadcrumb-item text-dark">جزییات سفارش</li>
+                    <!--end::آیتم-->
+                </ul>
+                <!--end::Breadcrumb-->
+            </div>
+            <!--end::Page title-->
+            <!--begin::Actions-->
+            <div class="d-flex align-items-center py-1">
+                <!--begin::Wrapper-->
+                <div class="me-4">
+                    <!--begin::Menu-->
+                    <a href="#" class="btn btn-sm btn-flex btn-light btn-active-primary fw-bold"
+                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
+                        <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
+                        <span class="svg-icon svg-icon-5 svg-icon-gray-500 me-1">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z"
+                                    fill="currentColor" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->فیلتر</a>
+                    <!--begin::Menu 1-->
+                    <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
+                        id="kt_menu_637dd0b777633">
+                        <!--begin::Header-->
+                        <div class="px-7 py-5">
+                            <div class="fs-5 text-dark fw-bold">فیلتر تنظیمات</div>
+                        </div>
+                        <!--end::Header-->
+                        <!--begin::Menu separator-->
+                        <div class="separator border-gray-200"></div>
+                        <!--end::Menu separator-->
+                        <!--begin::Form-->
+                        <div class="px-7 py-5">
+                            <!--begin::Input group-->
+                            <div class="mb-10">
+                                <!--begin::Tags-->
+                                <label class="form-label fw-semibold">وضعیت:</label>
+                                <!--end::Tags-->
+                                <!--begin::Input-->
+                                <div>
+                                    <select class="form-select form-select-solid" data-kt-select2="true"
+                                        data-placeholder="انتخاب گزینه" data-dropdown-parent="#kt_menu_637dd0b777633"
+                                        data-allow-clear="true">
+                                        <option></option>
+                                        <option value="1">تایید شده</option>
+                                        <option value="2">در انتظار</option>
+                                        <option value="2">در حال پردازش</option>
+                                        <option value="2">رد شد</option>
+                                    </select>
+                                </div>
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="mb-10">
+                                <!--begin::Tags-->
+                                <label class="form-label fw-semibold">نوع عضویت:</label>
+                                <!--end::Tags-->
+                                <!--begin::تنظیمات-->
+                                <div class="d-flex">
+                                    <!--begin::تنظیمات-->
+                                    <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
+                                        <input class="form-check-input" type="checkbox" value="1" />
+                                        <span class="form-check-label">نویسنده</span>
+                                    </label>
+                                    <!--end::تنظیمات-->
+                                    <!--begin::تنظیمات-->
+                                    <label class="form-check form-check-sm form-check-custom form-check-solid">
+                                        <input class="form-check-input" type="checkbox" value="2" checked="checked" />
+                                        <span class="form-check-label">مشتری</span>
+                                    </label>
+                                    <!--end::تنظیمات-->
+                                </div>
+                                <!--end::تنظیمات-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="mb-10">
+                                <!--begin::Tags-->
+                                <label class="form-label fw-semibold">اعلان ها:</label>
+                                <!--end::Tags-->
+                                <!--begin::Switch-->
+                                <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" value="" name="notifications"
+                                        checked="checked" />
+                                    <label class="form-check-label">فعال</label>
+                                </div>
+                                <!--end::Switch-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Actions-->
+                            <div class="d-flex justify-content-end">
+                                <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2"
+                                    data-kt-menu-dismiss="true">ریست</button>
+                                <button type="submit" class="btn btn-sm btn-primary"
+                                    data-kt-menu-dismiss="true">تایید</button>
+                            </div>
+                            <!--end::Actions-->
+                        </div>
+                        <!--end::Form-->
+                    </div>
+                    <!--end::Menu 1-->
+                    <!--end::Menu-->
+                </div>
+                <!--end::Wrapper-->
+                <!--begin::Button-->
+                <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app"
+                    id="kt_toolbar_primary_button">ساختن</a>
+                <!--end::Button-->
+            </div>
+            <!--end::Actions-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Toolbar-->
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Order details page-->
+            <div class="d-flex flex-column gap-7 gap-lg-10">
+                <div class="d-flex flex-wrap flex-stack gap-5 gap-lg-10">
+                    <!--begin:::Tabs-->
+                    <ul
+                        class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-lg-n2 me-auto">
+                        <!--begin:::Tab item-->
+                        <li class="nav-item">
+                            <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab"
+                                href="#kt_ecommerce_sales_order_summary">خلاصه سفارش</a>
+                        </li>
+                        <!--end:::Tab item-->
+                        <!--begin:::Tab item-->
+                        <li class="nav-item">
+                            <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
+                                href="#kt_ecommerce_sales_order_history">تاریخچه سفارش</a>
+                        </li>
+                        <!--end:::Tab item-->
+                    </ul>
+                    <!--end:::Tabs-->
+                    <!--begin::Button-->
+                    <a href="../../demo13/dist/apps/ecommerce/sales/listing.html"
+                        class="btn btn-icon btn-light btn-sm ms-auto me-lg-n7">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr074.svg-->
+                        <span class="svg-icon svg-icon-2">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M11.2657 11.4343L15.45 7.25C15.8642 6.83579 15.8642 6.16421 15.45 5.75C15.0358 5.33579 14.3642 5.33579 13.95 5.75L8.40712 11.2929C8.01659 11.6834 8.01659 12.3166 8.40712 12.7071L13.95 18.25C14.3642 18.6642 15.0358 18.6642 15.45 18.25C15.8642 17.8358 15.8642 17.1642 15.45 16.75L11.2657 12.5657C10.9533 12.2533 10.9533 11.7467 11.2657 11.4343Z"
+                                    fill="currentColor" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </a>
+                    <!--end::Button-->
+                    <!--begin::Button-->
+                    <a href="../../demo13/dist/apps/ecommerce/sales/edit-order.html"
+                        class="btn btn-success btn-sm me-lg-n7"> Order</a>
+                    <!--end::Button-->
+                    <!--begin::Button-->
+                    <a href="../../demo13/dist/apps/ecommerce/sales/add-order.html"
+                        class="btn btn-primary btn-sm">افزودن سفارش جدید</a>
+                    <!--end::Button-->
+                </div>
+                <!--begin::خلاصه سفارش-->
+                <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
+                    <!--begin::Order details-->
+                    <div class="card card-flush py-4 flex-row-fluid">
+                        <!--begin::کارت header-->
+                        <div class="card-header">
+                            <div class="card-title text-center">
+                                <h2 class="text-center">جزییات سفارش(#{{order.refrence_id}})</h2>
+                            </div>
+                        </div>
+                        <!--end::کارت header-->
+                        <!--begin::کارت body-->
+                        <div class="card-body pt-0">
+                            <div class="table-responsive">
+                                <!--begin::Table-->
+                                <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                    <!--begin::Table body-->
+                                    <tbody class="fw-semibold text-gray-600">
+                                        <!--begin::تاریخ-->
+                                        <tr>
+                                            <td class="text-muted">
+                                                <div class="d-flex align-items-center">
+                                                    <!--begin::Svg Icon | path: icons/duotune/files/fil002.svg-->
+                                                    <span class="svg-icon svg-icon-2 me-2">
+                                                        <svg width="20" height="21" viewBox="0 0 20 21" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path opacity="0.3"
+                                                                d="M19 3.40002C18.4 3.40002 18 3.80002 18 4.40002V8.40002H14V4.40002C14 3.80002 13.6 3.40002 13 3.40002C12.4 3.40002 12 3.80002 12 4.40002V8.40002H8V4.40002C8 3.80002 7.6 3.40002 7 3.40002C6.4 3.40002 6 3.80002 6 4.40002V8.40002H2V4.40002C2 3.80002 1.6 3.40002 1 3.40002C0.4 3.40002 0 3.80002 0 4.40002V19.4C0 20 0.4 20.4 1 20.4H19C19.6 20.4 20 20 20 19.4V4.40002C20 3.80002 19.6 3.40002 19 3.40002ZM18 10.4V13.4H14V10.4H18ZM12 10.4V13.4H8V10.4H12ZM12 15.4V18.4H8V15.4H12ZM6 10.4V13.4H2V10.4H6ZM2 15.4H6V18.4H2V15.4ZM14 18.4V15.4H18V18.4H14Z"
+                                                                fill="currentColor" />
+                                                            <path
+                                                                d="M19 0.400024H1C0.4 0.400024 0 0.800024 0 1.40002V4.40002C0 5.00002 0.4 5.40002 1 5.40002H19C19.6 5.40002 20 5.00002 20 4.40002V1.40002C20 0.800024 19.6 0.400024 19 0.400024Z"
+                                                                fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->تاریخ
+                                                </div>
+                                            </td>
+                                            <td class="fw-bold text-end">{{order.created}}</td>
+                                        </tr>
+                                        <!--end::تاریخ-->
+                                        <!--begin::روش پرداخت-->
+                                        <tr>
+                                            <td class="text-muted">
+                                                <div class="d-flex align-items-center">
+                                                    <!--begin::Svg Icon | path: icons/duotune/finance/fin008.svg-->
+                                                    <span class="svg-icon svg-icon-2 me-2">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path opacity="0.3"
+                                                                d="M3.20001 5.91897L16.9 3.01895C17.4 2.91895 18 3.219 18.1 3.819L19.2 9.01895L3.20001 5.91897Z"
+                                                                fill="currentColor" />
+                                                            <path opacity="0.3"
+                                                                d="M13 13.9189C13 12.2189 14.3 10.9189 16 10.9189H21C21.6 10.9189 22 11.3189 22 11.9189V15.9189C22 16.5189 21.6 16.9189 21 16.9189H16C14.3 16.9189 13 15.6189 13 13.9189ZM16 12.4189C15.2 12.4189 14.5 13.1189 14.5 13.9189C14.5 14.7189 15.2 15.4189 16 15.4189C16.8 15.4189 17.5 14.7189 17.5 13.9189C17.5 13.1189 16.8 12.4189 16 12.4189Z"
+                                                                fill="currentColor" />
+                                                            <path
+                                                                d="M13 13.9189C13 12.2189 14.3 10.9189 16 10.9189H21V7.91895C21 6.81895 20.1 5.91895 19 5.91895H3C2.4 5.91895 2 6.31895 2 6.91895V20.9189C2 21.5189 2.4 21.9189 3 21.9189H19C20.1 21.9189 21 21.0189 21 19.9189V16.9189H16C14.3 16.9189 13 15.6189 13 13.9189Z"
+                                                                fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->روش پرداخت
+                                                </div>
+                                            </td>
+                                            <td class="fw-bold text-end">
+                                                درب منزل
+
+                                        </tr>
+                                        <!--end::روش پرداخت-->
+                                        <!--begin::تاریخ-->
+                                        <tr>
+                                            <td class="text-muted">
+                                                <div class="d-flex align-items-center">
+                                                    <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm006.svg-->
+                                                    <span class="svg-icon svg-icon-2 me-2">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M20 8H16C15.4 8 15 8.4 15 9V16H10V17C10 17.6 10.4 18 11 18H16C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18H21C21.6 18 22 17.6 22 17V13L20 8Z"
+                                                                fill="currentColor" />
+                                                            <path opacity="0.3"
+                                                                d="M20 18C20 19.1 19.1 20 18 20C16.9 20 16 19.1 16 18C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18ZM15 4C15 3.4 14.6 3 14 3H3C2.4 3 2 3.4 2 4V13C2 13.6 2.4 14 3 14H15V4ZM6 16C4.9 16 4 16.9 4 18C4 19.1 4.9 20 6 20C7.1 20 8 19.1 8 18C8 16.9 7.1 16 6 16Z"
+                                                                fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->روش حمل و نقل
+                                                </div>
+                                            </td>
+                                            <td class="fw-bold text-end">پست</td>
+                                        </tr>
+                                        <!--end::تاریخ-->
+                                    </tbody>
+                                    <!--end::Table body-->
+                                </table>
+                                <!--end::Table-->
+                            </div>
+                        </div>
+                        <!--end::کارت body-->
+                    </div>
+                    <!--end::Order details-->
+                    <!--begin::جزییات مشتری-->
+                    <div class="card card-flush py-4 flex-row-fluid">
+                        <!--begin::کارت header-->
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>مشخصات بازاریاب</h2>
+                            </div>
+                        </div>
+                        <!--end::کارت header-->
+                        <!--begin::کارت body-->
+                        <div class="card-body pt-0">
+                            <div class="table-responsive">
+                                <!--begin::Table-->
+                                <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                    <!--begin::Table body-->
+                                    <tbody class="fw-semibold text-gray-600">
+                                        <!--begin::مشتری name-->
+                                        <tr>
+                                            <td class="text-muted">
+                                                <div class="d-flex align-items-center">
+                                                    <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
+                                                    <span class="svg-icon svg-icon-2 me-2">
+                                                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path opacity="0.3"
+                                                                d="M16.5 9C16.5 13.125 13.125 16.5 9 16.5C4.875 16.5 1.5 13.125 1.5 9C1.5 4.875 4.875 1.5 9 1.5C13.125 1.5 16.5 4.875 16.5 9Z"
+                                                                fill="currentColor" />
+                                                            <path
+                                                                d="M9 16.5C10.95 16.5 12.75 15.75 14.025 14.55C13.425 12.675 11.4 11.25 9 11.25C6.6 11.25 4.57499 12.675 3.97499 14.55C5.24999 15.75 7.05 16.5 9 16.5Z"
+                                                                fill="currentColor" />
+                                                            <rect x="7" y="6" width="4" height="4" rx="2"
+                                                                fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->نام
+                                                </div>
+                                            </td>
+                                            <td class="fw-bold text-end">
+                                                <div class="d-flex align-items-center justify-content-end">
+                                                    <!--begin:: آواتار -->
+                                                    <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
+                                                        <a
+                                                            href="../../demo13/dist/apps/ecommerce/customers/details.html">
+                                                            <div class="symbol-label">
+
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <!--end::Avatar-->
+                                                    <!--begin::نام-->
+                                                    <a href="../../demo13/dist/apps/ecommerce/customers/details.html"
+                                                        class="text-gray-600 text-hover-primary">{{order.netwoker_name}}</a>
+                                                    <!--end::نام-->
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!--end::مشتری name-->
+                                        <!--begin::مشتری email-->
+                                        <tr>
+                                            <td class="text-muted">
+                                                <div class="d-flex align-items-center">
+                                                    <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
+                                                    <span class="svg-icon svg-icon-2 me-2">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path opacity="0.3"
+                                                                d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z"
+                                                                fill="currentColor" />
+                                                            <path
+                                                                d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z"
+                                                                fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->شماره تلفن
+                                                </div>
+                                            </td>
+                                            <td class="fw-bold text-end">
+                                                <a href="../../demo13/dist/apps/user-management/users/view.html"
+                                                    class="text-gray-600 text-hover-primary">{{order.networker.mobile}}</a>
+                                            </td>
+                                        </tr>
+                                        <!--end::روش پرداخت-->
+                                        <!--begin::تاریخ-->
+                                        <tr>
+                                            <td class="text-muted">
+                                                <div class="d-flex align-items-center">
+                                                    <!--begin::Svg Icon | path: icons/duotune/electronics/elc003.svg-->
+                                                    <span class="svg-icon svg-icon-2 me-2">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M5 20H19V21C19 21.6 18.6 22 18 22H6C5.4 22 5 21.6 5 21V20ZM19 3C19 2.4 18.6 2 18 2H6C5.4 2 5 2.4 5 3V4H19V3Z"
+                                                                fill="currentColor" />
+                                                            <path opacity="0.3" d="M19 4H5V20H19V4Z"
+                                                                fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->کد بازاریابی
+                                                </div>
+                                            </td>
+                                            <td class="fw-bold text-end">{{order.networker.code}}</td>
+                                        </tr>
+                                        <!--end::تاریخ-->
+                                    </tbody>
+                                    <!--end::Table body-->
+                                </table>
+                                <!--end::Table-->
+                            </div>
+                        </div>
+                        <!--end::کارت body-->
+                    </div>
+                    <!--end::جزییات مشتری-->
+                    <!--begin::اسناد-->
+                    <div class="card card-flush py-4 flex-row-fluid">
+                        <!--begin::کارت header-->
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>مشخصات خریدار</h2>
+                            </div>
+                        </div>
+                        <!--end::کارت header-->
+                        <!--begin::کارت body-->
+                        <div class="card-body pt-0">
+                            <div class="table-responsive">
+                                <!--begin::Table-->
+                                <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                    <!--begin::Table body-->
+                                    <tbody class="fw-semibold text-gray-600">
+                                        <!--begin::فاکتور-->
+                                        <tr>
+                                            <td class="text-muted">
+                                                <div class="d-flex align-items-center">
+                                                    <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm008.svg-->
+                                                    <span class="svg-icon svg-icon-2 me-2">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path opacity="0.3"
+                                                                d="M18 21.6C16.3 21.6 15 20.3 15 18.6V2.50001C15 2.20001 14.6 1.99996 14.3 2.19996L13 3.59999L11.7 2.3C11.3 1.9 10.7 1.9 10.3 2.3L9 3.59999L7.70001 2.3C7.30001 1.9 6.69999 1.9 6.29999 2.3L5 3.59999L3.70001 2.3C3.50001 2.1 3 2.20001 3 3.50001V18.6C3 20.3 4.3 21.6 6 21.6H18Z"
+                                                                fill="currentColor" />
+                                                            <path
+                                                                d="M12 12.6H11C10.4 12.6 10 12.2 10 11.6C10 11 10.4 10.6 11 10.6H12C12.6 10.6 13 11 13 11.6C13 12.2 12.6 12.6 12 12.6ZM9 11.6C9 11 8.6 10.6 8 10.6H6C5.4 10.6 5 11 5 11.6C5 12.2 5.4 12.6 6 12.6H8C8.6 12.6 9 12.2 9 11.6ZM9 7.59998C9 6.99998 8.6 6.59998 8 6.59998H6C5.4 6.59998 5 6.99998 5 7.59998C5 8.19998 5.4 8.59998 6 8.59998H8C8.6 8.59998 9 8.19998 9 7.59998ZM13 7.59998C13 6.99998 12.6 6.59998 12 6.59998H11C10.4 6.59998 10 6.99998 10 7.59998C10 8.19998 10.4 8.59998 11 8.59998H12C12.6 8.59998 13 8.19998 13 7.59998ZM13 15.6C13 15 12.6 14.6 12 14.6H10C9.4 14.6 9 15 9 15.6C9 16.2 9.4 16.6 10 16.6H12C12.6 16.6 13 16.2 13 15.6Z"
+                                                                fill="currentColor" />
+                                                            <path
+                                                                d="M15 18.6C15 20.3 16.3 21.6 18 21.6C19.7 21.6 21 20.3 21 18.6V12.5C21 12.2 20.6 12 20.3 12.2L19 13.6L17.7 12.3C17.3 11.9 16.7 11.9 16.3 12.3L15 13.6V18.6Z"
+                                                                fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->نام
+                                                    <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                                        data-bs-toggle="tooltip" title=""
+                                                        data-bs-original-title="نمایش the invoice generated by this order."></i>
+                                                </div>
+                                            </td>
+                                            <td class="fw-bold text-end">
+                                                <a href="####"
+                                                    class="text-gray-600 text-hover-primary">{{order.bayer.first_name}}</a>
+                                            </td>
+                                        </tr>
+                                        <!--end::فاکتور-->
+                                        <!--begin::حمل دریایی-->
+                                        <tr>
+                                            <td class="text-muted">
+                                                <div class="d-flex align-items-center">
+                                                    <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm006.svg-->
+                                                    <span class="svg-icon svg-icon-2 me-2">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M20 8H16C15.4 8 15 8.4 15 9V16H10V17C10 17.6 10.4 18 11 18H16C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18H21C21.6 18 22 17.6 22 17V13L20 8Z"
+                                                                fill="currentColor" />
+                                                            <path opacity="0.3"
+                                                                d="M20 18C20 19.1 19.1 20 18 20C16.9 20 16 19.1 16 18C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18ZM15 4C15 3.4 14.6 3 14 3H3C2.4 3 2 3.4 2 4V13C2 13.6 2.4 14 3 14H15V4ZM6 16C4.9 16 4 16.9 4 18C4 19.1 4.9 20 6 20C7.1 20 8 19.1 8 18C8 16.9 7.1 16 6 16Z"
+                                                                fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->نام خانوادگی
+                                                    <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                                        data-bs-toggle="tooltip" title=""
+                                                        data-bs-original-title="نمایش the shipping manifest generated by this order."></i>
+                                                </div>
+                                            </td>
+                                            <td class="fw-bold text-end">
+                                                <a href="#"
+                                                    class="text-gray-600 text-hover-primary">{{order.bayer.last_name}}</a>
+                                            </td>
+                                        </tr>
+                                        <!--end::حمل دریایی-->
+                                        <!--begin::پاداش-->
+                                        <tr>
+                                            <td class="text-muted">
+                                                <div class="d-flex align-items-center">
+                                                    <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm011.svg-->
+                                                    <span class="svg-icon svg-icon-2 me-2">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path opacity="0.3"
+                                                                d="M21.6 11.2L19.3 8.89998V5.59993C19.3 4.99993 18.9 4.59993 18.3 4.59993H14.9L12.6 2.3C12.2 1.9 11.6 1.9 11.2 2.3L8.9 4.59993H5.6C5 4.59993 4.6 4.99993 4.6 5.59993V8.89998L2.3 11.2C1.9 11.6 1.9 12.1999 2.3 12.5999L4.6 14.9V18.2C4.6 18.8 5 19.2 5.6 19.2H8.9L11.2 21.5C11.6 21.9 12.2 21.9 12.6 21.5L14.9 19.2H18.2C18.8 19.2 19.2 18.8 19.2 18.2V14.9L21.5 12.5999C22 12.1999 22 11.6 21.6 11.2Z"
+                                                                fill="currentColor" />
+                                                            <path
+                                                                d="M11.3 9.40002C11.3 10.2 11.1 10.9 10.7 11.3C10.3 11.7 9.8 11.9 9.2 11.9C8.8 11.9 8.40001 11.8 8.10001 11.6C7.80001 11.4 7.50001 11.2 7.40001 10.8C7.20001 10.4 7.10001 10 7.10001 9.40002C7.10001 8.80002 7.20001 8.4 7.30001 8C7.40001 7.6 7.7 7.29998 8 7.09998C8.3 6.89998 8.7 6.80005 9.2 6.80005C9.5 6.80005 9.80001 6.9 10.1 7C10.4 7.1 10.6 7.3 10.8 7.5C11 7.7 11.1 8.00005 11.2 8.30005C11.3 8.60005 11.3 9.00002 11.3 9.40002ZM10.1 9.40002C10.1 8.80002 10 8.39998 9.90001 8.09998C9.80001 7.79998 9.6 7.70007 9.2 7.70007C9 7.70007 8.8 7.80002 8.7 7.90002C8.6 8.00002 8.50001 8.2 8.40001 8.5C8.40001 8.7 8.30001 9.10002 8.30001 9.40002C8.30001 9.80002 8.30001 10.1 8.40001 10.4C8.40001 10.6 8.5 10.8 8.7 11C8.8 11.1 9 11.2001 9.2 11.2001C9.5 11.2001 9.70001 11.1 9.90001 10.8C10 10.4 10.1 10 10.1 9.40002ZM14.9 7.80005L9.40001 16.7001C9.30001 16.9001 9.10001 17.1 8.90001 17.1C8.80001 17.1 8.70001 17.1 8.60001 17C8.50001 16.9 8.40001 16.8001 8.40001 16.7001C8.40001 16.6001 8.4 16.5 8.5 16.4L14 7.5C14.1 7.3 14.2 7.19998 14.3 7.09998C14.4 6.99998 14.5 7 14.6 7C14.7 7 14.8 6.99998 14.9 7.09998C15 7.19998 15 7.30002 15 7.40002C15.2 7.30002 15.1 7.50005 14.9 7.80005ZM16.6 14.2001C16.6 15.0001 16.4 15.7 16 16.1C15.6 16.5 15.1 16.7001 14.5 16.7001C14.1 16.7001 13.7 16.6 13.4 16.4C13.1 16.2 12.8 16 12.7 15.6C12.5 15.2 12.4 14.8001 12.4 14.2001C12.4 13.3001 12.6 12.7 12.9 12.3C13.2 11.9 13.7 11.7001 14.5 11.7001C14.8 11.7001 15.1 11.8 15.4 11.9C15.7 12 15.9 12.2 16.1 12.4C16.3 12.6 16.4 12.9001 16.5 13.2001C16.6 13.4001 16.6 13.8001 16.6 14.2001ZM15.4 14.1C15.4 13.5 15.3 13.1 15.2 12.9C15.1 12.6 14.9 12.5 14.5 12.5C14.3 12.5 14.1 12.6001 14 12.7001C13.9 12.8001 13.8 13.0001 13.7 13.2001C13.6 13.4001 13.6 13.8 13.6 14.1C13.6 14.7 13.7 15.1 13.8 15.4C13.9 15.7 14.1 15.8 14.5 15.8C14.8 15.8 15 15.7 15.2 15.4C15.3 15.2 15.4 14.7 15.4 14.1Z"
+                                                                fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->شماره موبایل
+                                                    <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                                        data-bs-toggle="tooltip" title=""
+                                                        data-bs-original-title="Reward value earned by customer when purchasing this order."></i>
+                                                </div>
+                                            </td>
+                                            <td class="fw-bold text-end">{{order.bayer.phone}}</td>
+                                        </tr>
+                                        <!--end::پاداش-->
+                                    </tbody>
+                                    <!--end::Table body-->
+                                </table>
+                                <!--end::Table-->
+                            </div>
+                        </div>
+                        <!--end::کارت body-->
+                    </div>
+                    <!--end::اسناد-->
+                </div>
+                <!--end::خلاصه سفارش-->
+                <!--begin::Tab content-->
+                <div class="tab-content">
+                    <!--begin::Tab pane-->
+                    <div class="card card-flush py-4 flex-row-fluid">
+                        <!--begin::کارت header-->
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>آدرس</h2>
+                            </div>
+                            <div style="float: left;">
+                                <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#kt_modal_new_address">
+                                    <span class="text-dark">اعمال تغییرات</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!--end::کارت header-->
+                        <!--begin::کارت body-->
+
+
+                        <div class="modal fade" id="kt_modal_new_address" tabindex="-1" aria-hidden="true">
+                            <!--begin::Modal dialog-->
+                            <div class="modal-dialog modal-dialog-centered mw-650px">
+                                <!--begin::Modal content-->
+                                <div class="modal-content">
+                                    <!--begin::Form-->
+                                    <form class="form" action="#" id="create_addres_order_form">
+                                        <!--begin::Modal header-->
+                                        <div class="modal-header" id="kt_modal_new_address_header">
+                                            <!--begin::Modal title-->
+                                            <h2>آدرس خریدار را با دقت وارد کنید</h2>
+                                            <!--end::Modal title-->
+                                            <!--begin::Close-->
+                                            <div class="btn btn-sm btn-icon btn-active-color-primary"
+                                                data-bs-dismiss="modal">
+                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                                <span class="svg-icon svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2"
+                                                            rx="1" transform="rotate(-45 6 17.3137)"
+                                                            fill="currentColor" />
+                                                        <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                                            transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Close-->
+                                        </div>
+                                        <!--end::Modal header-->
+                                        <!--begin::Modal body-->
+                                        <div class="modal-body py-10 px-lg-17">
+                                            <!--begin::Scroll-->
+                                            <div class="scroll-y me-n7 pe-7" id="kt_modal_new_address_scroll"
+                                                data-kt-scroll="true"
+                                                data-kt-scroll-activate="{default: false, lg: true}"
+                                                data-kt-scroll-max-height="auto"
+                                                data-kt-scroll-dependencies="#kt_modal_new_address_header"
+                                                data-kt-scroll-wrappers="#kt_modal_new_address_scroll"
+                                                data-kt-scroll-offset="300px">
+                                                <!--begin::Notice-->
+                                                <!--begin::Notice-->
+
+     
+
+                                                    <!--begin::user-->
+                                                    {% csrf_token %}
+                                                    <!--end::user-->
+                                           
+                                                    <!--end::user-->
+                                                    <!--begin::user-->
+
+                                 
+                                                <!--end::Notice-->
+                                                <!--end::Notice-->
+                                                <!--begin::Input group-->
+                                                <div class="row mb-5">
+                                                    <!--begin::Col-->
+                                                    <div class="col-md-6 fv-row">
+                                                        <!--begin::Tags-->
+                                                        <label class="required fs-5 fw-semibold mb-2">نام</label>
+                                                        <!--end::Tags-->
+                                                        <!--begin::Input-->
+                                                        <input type="text" class="form-control form-control-solid"
+                                                            placeholder="نام" name="first_name" value="{{order.bayer.first_name}}"/>
+                                                        <!--end::Input-->
+                                                    </div>
+                                                    <!--end::Col-->
+                                                    <!--begin::Col-->
+                                                    <div class="col-md-6 fv-row">
+                                                        <!--end::Tags-->
+                                                        <label class="required fs-5 fw-semibold mb-2">نام
+                                                            خانوادگی</label>
+                                                        <!--end::Tags-->
+                                                        <!--end::Input-->
+                                                        <input type="text" class="form-control form-control-solid"
+                                                            placeholder="نام خانوادگی" name="last_name" value="{{order.bayer.last_name}}" />
+                                                        <!--end::Input-->
+                                                    </div>
+                                                    <!--end::Col-->
+                                                </div>
+                                                <!--end::Input group-->
+                                                <!--begin::Input group-->
+                                                <div class="d-flex flex-column mb-5 fv-row">
+                                                    <!--begin::Tags-->
+                                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                        <span class="required">استان</span>
+                                                        <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                                            data-bs-toggle="tooltip"
+                                                            title="Your payment statements may very based on selected country"></i>
+                                                    </label>
+                                                    <!--end::Tags-->
+                                                    <!--begin::انتخاب-->
+                                                    <select class="form-select form-select-solid" id="car" onchange="ChangeCarList()"
+                                                        data-dropdown-parent="#kt_modal_new_address"
+                                                        name="ostan"
+                                                        >
+
+                                                        <option value="لطفا استان را انتخاب نمایید">لطفا استان را انتخاب
+                                                            نمایید</option>
+                                                        <option value="تهران">تهران</option>
+                                                        <option value="گیلان">گیلان</option>
+                                                        <option value="آذربایجان شرقی">آذربایجان شرقی</option>
+                                                        <option value="خوزستان">خوزستان</option>
+                                                        <option value="فارس">فارس</option>
+                                                        <option value="اصفهان">اصفهان</option>
+                                                        <option value="خراسان رضوی">خراسان رضوی</option>
+                                                        <option value="قزوین">قزوین</option>
+                                                        <option value="سمنان">سمنان</option>
+                                                        <option value="قم">قم</option>
+                                                        <option value="مرکزی">مرکزی</option>
+                                                        <option value="زنجان">زنجان</option>
+                                                        <option value="مازندران">مازندران</option>
+                                                        <option value="گلستان">گلستان</option>
+                                                        <option value="اردبیل">اردبیل</option>
+                                                        <option value="آذربایجان غربی">آذربایجان غربی</option>
+                                                        <option value="همدان">همدان</option>
+                                                        <option value="کردستان">کردستان</option>
+                                                        <option value="کرمانشاه">کرمانشاه</option>
+                                                        <option value="لرستان">لرستان</option>
+                                                        <option value="بوشهر">بوشهر</option>
+                                                        <option value="کرمان">کرمان</option>
+                                                        <option value="هرمزگان">هرمزگان</option>
+                                                        <option value="چهارمحال و بختیاری">چهارمحال و بختیاری</option>
+                                                        <option value="یزد">یزد</option>
+                                                        <option value="سیستان و بلوچستان">سیستان و بلوچستان</option>
+                                                        <option value="ایلام">ایلام</option>
+                                                        <option value="کهگلویه و بویراحمد">کهگلویه و بویراحمد</option>
+                                                        <option value="خراسان شمالی">خراسان شمالی</option>
+                                                        <option value="خراسان جنوبی">خراسان جنوبی</option>
+                                                        <option value="البرز">البرز</option>
+                                                    </select>
+                                                    <!--end::انتخاب-->
+                                                </div>
+
+                                                <!--end::Input group-->
+                                                <!--begin::Input group-->
+                                                <div class="d-flex flex-column mb-5 fv-row" id="hasan">
+                                                    <!--begin::Tags-->
+                                                    <label class="required fs-5 fw-semibold mb-2">شهر</label>
+                                                    <!--end::Tags-->
+                                                    <!--begin::Input-->
+                                                    <select id="carmodel" name="city"
+                                                        data-dropdown-parent="#kt_modal_new_address"
+                                                        data-control="select2" class="form-select form-select-solid">
+                                                        <option value="">لطفا استان خود را انتخاب کنید</option>
+                                                    </select>
+                                                    <!--end::Input-->
+                                                </div>
+                                                <!--end::Input group-->
+                                                <!--begin::Input group-->
+                                                <div class="d-flex flex-column mb-5 fv-row">
+                                                    <!--begin::Tags-->
+                                                    <label for="" class="form-label">آدرس کامل</label>
+                                                    <!--end::Tags-->
+                                                    <!--begin::Input-->
+                                                    <textarea name="addres" value="{{order.bayer.addres.address}}"
+                                                        class="form-control form-control form-control-solid"
+                                                        data-kt-autosize="true"
+                                                        placeholder="لطفا آدرس کامل را وارد کنید"></textarea>
+                                                    <!--end::Input-->
+                                                </div>
+                                                <!--end::Input group-->
+                                                <!--begin::Input group-->
+                                                <div class="d-flex flex-column mb-5 fv-row">
+                                                    <!--begin::Tags-->
+                                                    <label class="fs-5 fw-semibold mb-2">شماره تلفن خریدار</label>
+                                                    <!--end::Tags-->
+                                                    <!--begin::Input-->
+                                                    <input class="form-control form-control-solid"
+                                                        placeholder=" شماره تلفن" value="{{order.bayer.phone}}"  name="phone_number" />
+                                                    <!--end::Input-->
+                                                </div>
+                                                <div class="d-flex flex-column mb-5 fv-row">
+                                                    <!--begin::Tags-->
+                                                    <label class="fs-5 fw-semibold mb-2">کدپستی</label>
+                                                    <!--end::Tags-->
+                                                    <!--begin::Input-->
+                                                    <input class="form-control form-control-solid"
+                                                        placeholder=" کد پستی" name="postcode" value="{{order.bayer.addres.postal_code}}" />
+                                                    <!--end::Input-->
+                                                </div>
+                                                <!--end::Input group-->
+                                                <!--begin::Input group-->
+                                                <div class="row g-9 mb-5">
+                                                    <!--begin::Col-->
+
+                                                    <!--end::Col-->
+                                                </div>
+                                                <!--end::Input group-->
+                                                <!--begin::Input group-->
+              
+                                                <!--end::Input group-->
+                                            </div>
+                                            <!--end::Scroll-->
+                                        </div>
+                                        <!--end::Modal body-->
+                                        <!--begin::Modal footer-->
+                                        <div class="modal-footer flex-center">
+                                            <!--begin::Button-->
+                                            <button type="reset" id="kt_modal_new_address_cancel"
+                                                class="btn btn-light me-3">لغو</button>
+                                            <!--end::Button-->
+                                            <!--begin::Button-->
+                                            <button type="button"  onclick="Create_Addres_Order()" id="create_addres_order" class="btn btn-primary">
+                                                <span class="indicator-label">ثبت</span>
+                                                <span class="indicator-progress">لطفا صبر کنید...
+                                                    <span
+                                                        class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                            </button>
+                                            <!--end::Button-->
+                                        </div>
+                                        <!--end::Modal footer-->
+                                    </form>
+                                    <!--end::Form-->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" tabindex="-1" id="kt_modal_stacked_2">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title">Stacked modal title</h3>
+
+                                        <!--begin::Close-->
+                                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
+                                            data-bs-dismiss="modal" aria-label="Close">
+                                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span
+                                                    class="path2"></span></i>
+                                        </div>
+                                        <!--end::Close-->
+                                    </div>
+
+                                    <div class="modal-body">
+                                        ...
+
+                                        <button type="button" class="btn btn-primary"
+                                            data-bs-stacked-modal="#kt_modal_stacked_3">
+                                            Launch stacked modal
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" tabindex="-1" id="kt_modal_stacked_3" data-bs-backdrop="static">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title">Stacked modal title</h3>
+
+                                        <!--begin::Close-->
+                                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
+                                            data-bs-dismiss="modal" aria-label="Close">
+                                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span
+                                                    class="path2"></span></i>
+                                        </div>
+                                        <!--end::Close-->
+                                    </div>
+
+                                    <div class="modal-body">
+                                        ...
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card-body pt-0">
+                            <div class="table-responsive">
+                                <!--begin::Table-->
+                                <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5">
+                                    <!--begin::Table body-->
+                                    <tbody class="fw-semibold text-gray-600">
+                                        <!--begin::IP address-->
+                                        <tr>
+                                            <td class="text-muted">نام و نام خانوادگی</td>
+                                            <td class="fw-bold text-end">{{order.bayer.first_name}}
+                                                {{order.bayer.last_name}}</td>
+                                        </tr>
+                                        <!--end::IP address-->
+                                        <!--begin::آی پی فوروارد شده-->
+                                        <tr>
+                                            <td class="text-muted">شماره تلفن</td>
+                                            <td class="fw-bold text-end">{{order.bayer.phone}}</td>
+                                        </tr>
+                                        <!--end::آی پی فوروارد شده-->
+                                        <!--begin::کاربر agent-->
+                                        <tr>
+                                            <td class="text-muted">استان </td>
+                                            <td class="fw-bold text-end">{{order.bayer.addres.state}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-muted">شهر </td>
+                                            <td class="fw-bold text-end">{{order.bayer.addres.city}}</td>
+                                        </tr>
+                                        <!--end::کاربر agent-->
+                                        <!--begin::Accept language-->
+                                        <tr>
+                                            <td class="text-muted">آدرس کامل</td>
+                                            <td class="fw-bold text-end">{{order.bayer.addres.address}}</td>
+                                        </tr>
+                                        <!--end::Accept language-->
+                                    </tbody>
+                                    <!--end::Table body-->
+                                </table>
+                                <!--end::Table-->
+                            </div>
+                        </div>
+                        <!--end::کارت body-->
+                    </div>
+                    <input type="hidden" id="order_id" value="{{order.refrence_id}}">
+                    <br>
+                    <br>
+                    <div class="tab-pane fade show active" id="kt_ecommerce_sales_order_summary" role="tab-panel">
+                        <!--begin::سفارشات-->
+                        <div class="d-flex flex-column gap-7 gap-lg-10">
+                            <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
+                                <!--begin::پرداخت address-->
+                                <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
+                                    <!--begin::برگشتground-->
+                                    <div class="position-absolute top-0 end-0 opacity-10 pe-none text-end">
+                                        <img src="assets/media/icons/duotune/ecommerce/ecm001.svg" class="w-175px" />
+                                    </div>
+                                    <!--end::برگشتground-->
+                                    <!--begin::کارت header-->
+
+
+                                    <h2 class="text-center">وضعیت ارسال</h2>
+
+
+                                    <!--end::کارت header-->
+                                    <!--begin::کارت body-->
+                                    <br>
+                                    <br>
+                                    <div class="d-flex flex-column mb-3  fv-row">
+                                        <select name="status" data-control="select2"
+                                            class="form-select form-select-solid" id="status_order">
+
+                                            {% for i in status %}
+
+                                            {% if i == order.status %}
+
+                                            <option selected value="{{i}}">{{i}}</option>
+                                            {% else %}
+                                            <option value="{{i}}">{{i}}</option>
+                                            {% endif %}
+
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+
+
+                                    <!--end::کارت body-->
+                                </div>
+
+                                <!--end::پرداخت address-->
+                                <!--begin::حمل دریایی address-->
+                                <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
+                                    <!--begin::برگشتground-->
+                                    <div class="position-absolute top-0 end-0 opacity-10 pe-none text-end">
+                                        <img src="assets/media/icons/duotune/ecommerce/ecm006.svg" class="w-175px" />
+                                    </div>
+                                    <!--end::برگشتground-->
+                                    <!--begin::کارت header-->
+
+                                    <h2 class="text-center">وضعیت تماس</h2>
+                                    <br>
+                                    <br>
+                                    <div class="d-flex flex-column mb-3  fv-row">
+                                        <select name="call_status" data-control="select2" size="1" onchange="Call_Status(this)"
+                                            class="form-select form-select-solid">
+
+                                            {% for c_status in call_status %}
+
+                                            {% if c_status == order.call_status %}
+
+                                            <option selected value="{{c_status.id}}">{{c_status.title}}</option>
+                                            {% else %}
+                                            <option value="{{c_status.id}}">{{c_status.title}}</option>
+                                            {% endif %}
+
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                    <!--end::کارت header-->
+                                    <!--begin::کارت body-->
+
+                                    <!--end::کارت body-->
+                                </div>
+                                <!--end::حمل دریایی address-->
+                            </div>
+                            <!--begin::محصولات لیست-->
+                            <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
+                                <!--begin::کارت header-->
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h2>سفارش #{{order.refrence_id}}</h2>
+                                    </div>
+                                </div>
+                                <!--end::کارت header-->
+                                <!--begin::کارت body-->
+                                <div class="card-body pt-0">
+                                    <div class="table-responsive">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                                <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                                                    <th class="min-w-175px">محصولات</th>
+                                                    <th class="min-w-100px text-end">کد محصول</th>
+                                                    <th class="min-w-70px ">تعداد</th>
+                                                    <th class="min-w-100px text-end">قیمت واحد</th>
+                                                    <th class="min-w-100px text-end">کل</th>
+                                                </tr>
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody class="fw-semibold text-gray-600">
+                                                <!--begin::محصولات-->
+
+                                                {% for order_product in order.products.all %}
+
+
+
+                                                <tr>
+                                                    <!--begin::product-->
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <!--begin::Thumbnail-->
+                                                            <a href="{{order_product.mainImage}}"
+                                                                class="symbol symbol-50px">
+                                                                <img src="{{order_product.mainImage}}" height="50px"
+                                                                    width="50px" alt="">
+                                                            </a>
+                                                            <!--end::Thumbnail-->
+                                                            <!--begin::Title-->
+                                                            <div class="ms-5">
+                                                                <a href="https://jensokala.com/product/index/{{order_product.refrence_id}}/{{order_product.title}}"
+                                                                    class="fw-bold text-gray-600 text-hover-primary">{{order_product.title}}</a>
+                                                                <div class="fs-7 text-muted"></div>
+                                                            </div>
+                                                            <!--end::Title-->
+                                                        </div>
+                                                    </td>
+                                                    <!--end::product-->
+                                                    <input type="hidden" id="rurl_getorder_price"
+                                                        value="{% url 'admindashbord:get_order_price' order.refrence_id %}">
+                                                    <!--begin::SKU-->
+                                                    <td class="text-end">{{order_product.refrence_id}}</td>
+                                                    <!--end::SKU-->
+                                                    <!--begin::Quantity-->
+                                                    <td style="float: left;">
+                                                        <!--begin::Dialer-->
+                                                        <div class="input-group w-md-150px" data-kt-dialer="true"
+                                                            data-kt-dialer-min="1" data-kt-dialer-max="40"
+                                                            data-kt-dialer-step="1" data-kt-dialer-prefix="">
+
+                                                            <!--begin::Decrease control-->
+                                                            <button
+                                                                class="btn btn-icon btn-outline btn-active-color-primary"
+                                                                type="button" data-kt-dialer-control="decrease">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="25"
+                                                                    height="25" fill="currentColor"
+                                                                    class="bi bi-dash-lg" viewBox="0 0 16 16">
+                                                                    <path fill-rule="evenodd"
+                                                                        d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z" />
+                                                                </svg>
+                                                            </button>
+                                                            <!--end::Decrease control-->
+
+                                                            <!--begin::Input control-->
+                                                            <input type="text" class="form-control" id="count_product"
+                                                                name="{{order_product.refrence_id}}" readonly
+                                                                placeholder="Amount"
+                                                                onchange="change_number(this,{{order_product.refrence_id}})"
+                                                                value="{{order_product.inventory_main}}"
+                                                                data-kt-dialer-control="input"
+                                                                style="text-align: center;" />
+                                                            <!--end::Input control-->
+
+                                                            <!--begin::Increase control-->
+                                                            <button
+                                                                class="btn btn-icon btn-outline btn-active-color-primary"
+                                                                type="button" data-kt-dialer-control="increase">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="25"
+                                                                    height="25" fill="currentColor" class="bi bi-plus"
+                                                                    viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                                                </svg>
+                                                            </button>
+                                                            <!--end::Increase control-->
+                                                        </div>
+                                                        <!--end::Dialer-->
+
+                                                    </td>
+                                                    <!--end::Quantity-->
+                                                    <!--begin::قیمت-->
+                                                    <td class="text-end"> <span
+                                                            id="price_vahed_{{order_product.refrence_id}}">{{order_product.price}}</span>
+                                                        تومان </td>
+                                                    <!--end::قیمت-->
+                                                    <!--begin::کل-->
+                                                    <td class="text-end"> <span
+                                                            id="all_price_{{order_product.refrence_id}}">{{order_product.all_price}}</span>
+                                                        تومان </td>
+                                                    <!--end::کل-->
+                                                </tr>
+                                                {% endfor %}
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>
+                                                        <button class="btn btn-light-dark" data-bs-toggle="modal"
+                                                            data-bs-target="#kt_modal_new_product"
+                                                            style="border-radius: 20px;"> افزودن محصول جدید</button>
+
+                                                        <div class="modal fade" id="kt_modal_new_product" tabindex="-1"
+                                                            aria-hidden="true">
+                                                            <!--begin::Modal dialog-->
+                                                            <div class="modal-dialog modal-dialog-centered mw-650px">
+                                                                <!--begin::Modal content-->
+                                                                <div class="modal-content">
+                                                                    <!--begin::Form-->
+                                                                    <input type="hidden" id="rurlcreate_product" value="">
+                                                                    <form class="form" action="#"
+                                                                        id="kt_modal_new_product_form">
+                                                                        <!--begin::Modal header-->
+                                                                        <div class="modal-header"
+                                                                            id="kt_modal_new_product_header">
+                                                                            <!--begin::Modal title-->
+                                                                            <h2>محصول جدید</h2>
+                                                                            <!--end::Modal title-->
+                                                                            <!--begin::Close-->
+                                                                            <div class="btn btn-sm btn-icon btn-active-color-primary"
+                                                                                data-bs-dismiss="modal">
+                                                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                                                                <span class="svg-icon svg-icon-1">
+                                                                                    <svg width="24" height="24"
+                                                                                        viewBox="0 0 24 24" fill="none"
+                                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                                        <rect opacity="0.5" x="6"
+                                                                                            y="17.3137" width="16"
+                                                                                            height="2" rx="1"
+                                                                                            transform="rotate(-45 6 17.3137)"
+                                                                                            fill="currentColor" />
+                                                                                        <rect x="7.41422" y="6"
+                                                                                            width="16" height="2" rx="1"
+                                                                                            transform="rotate(45 7.41422 6)"
+                                                                                            fill="currentColor" />
+                                                                                    </svg>
+                                                                                </span>
+                                                                                <!--end::Svg Icon-->
+                                                                            </div>
+                                                                            <!--end::Close-->
+                                                                        </div>
+                                                                        <!--end::Modal header-->
+                                                                        <!--begin::Modal body-->
+                                                                        <div class="modal-body py-10 px-lg-17">
+                                                                            <!--begin::Scroll-->
+                                                                            <div class="scroll-y me-n7 pe-7"
+                                                                                id="kt_modal_new_product_scroll"
+                                                                                data-kt-scroll="true"
+                                                                                data-kt-scroll-activate="{default: false, lg: true}"
+                                                                                data-kt-scroll-max-height="auto"
+                                                                                data-kt-scroll-dependencies="#kt_modal_new_product_header"
+                                                                                data-kt-scroll-wrappers="#kt_modal_new_product_scroll"
+                                                                                data-kt-scroll-offset="300px">
+                                                                                <!--begin::Notice-->
+                                                                                <!--begin::Notice-->
+
+                                                                                <div
+                                                                                    class="mh-200px scroll-y me-n-5 pe-7">
+
+                                                                                    <!--begin::user-->
+                                                                                    {% csrf_token %}
+                                                                                    <!--end::user-->
+                                                                                    <!--begin::user-->
+
+                                                                                    <!--end::user-->
+                                                                                    <!--begin::user-->
+
+                                                                                    <!--end::user-->
+                                                                                </div>
+                                                                                <br>
+                                                                                <br>
+                                                                                <!--end::Notice-->
+                                                                                <!--end::Notice-->
+                                                                                <!--begin::Input group-->
+                                                                                <div class="row mb-5">
+                                                                                    <!--begin::Col-->
+
+                                                                                    <!--end::Col-->
+                                                                                    <!--begin::Col-->
+
+                                                                                    <!--end::Col-->
+                                                                                </div>
+                                                                                <!--end::Input group-->
+                                                                                <!--begin::Input group-->
+                                                                                <div
+                                                                                    class="d-flex flex-column mb-5 fv-row">
+                                                                                    <!--begin::Tags-->
+                                                                                    <label
+                                                                                        class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                                                        <span class="required">انتخاب
+                                                                                            محصول</span>
+                                                                                        <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                                                                            data-bs-toggle="tooltip"
+                                                                                            title="Your payment statements may very based on selected country"></i>
+                                                                                    </label>
+                                                                                    <!--end::Tags-->
+                                                                                    <!--begin::انتخاب-->
+                                                                                    <select id="car"
+                                                                                        data-dropdown-parent="#kt_modal_new_product"
+                                                                                        data-control="select2"
+                                                                                        name="product"
+                                                                                        class="form-select form-select-solid">
+
+                                                                                        {% for main_product in main_prodacts %}
+
+
+
+                                                                                        <option
+                                                                                            value="{{main_product.refrence_id}}">
+                                                                                            {{main_product.title}} کد
+                                                                                            :{{main_product.refrence_id}}
+                                                                                        </option>
+                                                                                        {% endfor %}
+                                                                                    </select>
+                                                                                    <!--end::انتخاب-->
+                                                                                </div>
+
+                                                                                <!--end::Input group-->
+                                                                                <!--begin::Input group-->
+
+                                                                                <!--end::Input group-->
+                                                                                <!--begin::Input group-->
+
+                                                                                <!--end::Input group-->
+                                                                                <!--begin::Input group-->
+
+                                                                                <div
+                                                                                    class="d-flex flex-column mb-5 fv-row">
+                                                                                    <!--begin::Tags-->
+                                                                                    <label
+                                                                                        class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                                                        <span
+                                                                                            class="required">تعداد</span>
+                                                                                        <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                                                                            data-bs-toggle="tooltip"
+                                                                                            title="Your payment statements may very based on selected country"></i>
+                                                                                    </label>
+                                                                                    <!--end::Tags-->
+                                                                                    <!--begin::Input-->
+                                                                                    <div class="input-group w-md-550px" data-kt-dialer="true"
+                                                                                    data-kt-dialer-min="1" data-kt-dialer-max="40"
+                                                                                    data-kt-dialer-step="1" data-kt-dialer-prefix="">
+                        
+                                                                                    <!--begin::Decrease control-->
+                                                                                    <button
+                                                                                        class="btn btn-icon btn-outline btn-active-color-primary"
+                                                                                        type="button" data-kt-dialer-control="decrease">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="25"
+                                                                                            height="25" fill="currentColor"
+                                                                                            class="bi bi-dash-lg" viewBox="0 0 16 16">
+                                                                                            <path fill-rule="evenodd"
+                                                                                                d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z" />
+                                                                                        </svg>
+                                                                                    </button>
+                                                                                    <!--end::Decrease control-->
+                        
+                                                                                    <!--begin::Input control-->
+                                                                                    <input type="text" class="form-control" id="number_pro" name="count"
+                                                                                         readonly
+                                                                                        placeholder="Amount"
+                                                                                        value="1"
+                                                                                        data-kt-dialer-control="input"
+                                                                                        style="text-align: center;" />
+                                                                                    <!--end::Input control-->
+                        
+                                                                                    <!--begin::Increase control-->
+                                                                                    <button
+                                                                                        class="btn btn-icon btn-outline btn-active-color-primary"
+                                                                                        type="button" data-kt-dialer-control="increase">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="25"
+                                                                                            height="25" fill="currentColor" class="bi bi-plus"
+                                                                                            viewBox="0 0 16 16">
+                                                                                            <path
+                                                                                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                                                                        </svg>
+                                                                                    </button>
+                                                                                    <!--end::Increase control-->
+                                                                                </div>
+                                                                                    <!--end::Input-->
+                                                                                </div>
+                                                                                <!--end::Input group-->
+                                                                                <!--begin::Input group-->
+
+                                                                                <!--end::Input group-->
+                                                                                <!--begin::Input group-->
+
+                                                                                <!--end::Input group-->
+                                                                            </div>
+                                                                            <!--end::Scroll-->
+                                                                        </div>
+                                                                        <!--end::Modal body-->
+                                                                        <!--begin::Modal footer-->
+                                                                        <div class="modal-footer flex-center">
+                                                                            <!--begin::Button-->
+                                                                            <button type="reset"
+                                                                                id="kt_modal_new_product_cancel"
+                                                                                class="btn btn-light me-3">لغو</button>
+                                                                            <!--end::Button-->
+                                                                            <!--begin::Button-->
+                                                                            <button type="submit"
+                                                                                id="craete_product_submit"
+                                                                                class="btn btn-primary">
+                                                                                <span class="indicator-label">ثبت</span>
+                                                                                <span class="indicator-progress">لطفا
+                                                                                    صبر کنید...
+                                                                                    <span
+                                                                                        class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                                            </button>
+                                                                            <!--end::Button-->
+                                                                        </div>
+                                                                        <!--end::Modal footer-->
+                                                                    </form>
+                                                                    <!--end::Form-->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <!--end::محصولات-->
+                                                <!--begin::جمع کل-->
+
+                                                <tr>
+                                                    <td colspan="4" class="text-end">جمع کل</td>
+                                                    <td class="text-end"> <span id="all_price1"></span> تومان</td>
+                                                </tr>
+                                                <!--end::جمع کل-->
+                                                <!--begin::VAT-->
+                                                <tr>
+                                                    <td colspan="4" class="text-end">مالیات</td>
+                                                    <td class="text-end">0 تومان</td>
+                                                </tr>
+                                                <!--end::VAT-->
+                                                <!--begin::حمل دریایی-->
+                                                <tr>
+                                                    <td colspan="4" class="text-end">هزینه پست</td>
+                                                    <td class="text-end">{{order.mali.postpay}} تومان</td>
+                                                </tr>
+                                                <!--end::حمل دریایی-->
+                                                <!--begin::Grو total-->
+                                                <tr>
+                                                    <td colspan="4" class="fs-3 text-dark text-end">مبلغ کل سفارش</td>
+                                                    <td class="text-dark fs-3 fw-bolder text-end"><span
+                                                            id="all_price2"></span> تومان</td>
+                                                </tr>
+                                                <!--end::Grو total-->
+                                            </tbody>
+
+                                            <!--end::Table head-->
+                                        </table>
+
+                                        <!--end::Table-->
+                                    </div>
+                                </div>
+                                <!--end::کارت body-->
+                            </div>
+                            <!--end::محصولات لیست-->
+                        </div>
+                        <!--end::سفارشات-->
+                    </div>
+                    <!--end::Tab pane-->
+                    <!--begin::Tab pane-->
+                    <div class="tab-pane fade" id="kt_ecommerce_sales_order_history" role="tab-panel">
+                        <!--begin::سفارشات-->
+                        <div class="d-flex flex-column gap-7 gap-lg-10">
+                            <!--begin::Order history-->
+                            <div class="card card-flush py-4 flex-row-fluid">
+                                <!--begin::کارت header-->
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h2>تاریخچه سفارش</h2>
+                                    </div>
+                                </div>
+                                <!--end::کارت header-->
+                                <!--begin::کارت body-->
+                                <div class="card-body pt-0">
+                                    <div class="table-responsive">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                                <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                                                    <th class="min-w-100px">نام بازاریاب</th>
+                                                    <th class="min-w-175px">وضعیت</th>
+                                                    <th class="min-w-70px">تاریخ</th>
+                                                </tr>
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody class="fw-semibold text-gray-600">
+
+                                                {% for history in history_orders %}
+
+
+
+                                                <tr>
+                                                    <!--begin::تاریخ-->
+                                                    <td>{{history.netwoker_name}}</td>
+                                                    <!--end::تاریخ-->
+                                                    <!--begin::Comment-->
+                                                    <td>
+                                                        <!--begin::Badges-->
+                                                        <div class="badge badge-light-success">{{history.status}}</div>
+                                                        <!--end::Badges-->
+                                                    </td>
+                                                    <td>{{history.created}}</td>
+                                                    <!--end::Comment-->
+                                                    <!--begin::وضعیت-->
+                                                    <!--end::وضعیت-->
+                                                    <!--begin::مشتری Notified-->
+                                                    <!--end::مشتری Notified-->
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                            <!--end::Table head-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                </div>
+                                <!--end::کارت body-->
+                            </div>
+                            <!--end::Order history-->
+                            <!--begin::Order data-->
+
+                            <!--end::Order data-->
+                        </div>
+                        <!--end::سفارشات-->
+                    </div>
+                    <!--end::Tab pane-->
+                </div>
+                <!--end::Tab content-->
+            </div>
+            <!--end::Order details page-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Post-->
+</div>
+{% endblock content %}
+{% block js %}
+{% load static %}
+<script src="{% static 'metronic_template/js/custom/apps/ecommerce/sales/save-order.js' %}"></script>
+<script src="{% static 'metronic_template/js/widgets.bundle.js' %}"></script>
+<script src="{% static 'metronic_template/js/custom/widgets.js' %}"></script>
+<script src="{% static 'metronic_template/js/custom/apps/chat/chat.js' %}"></script>
+<script src="{% static 'metronic_template/js/custom/utilities/modals/upgrade-plan.js' %}"></script>
+<script src="{% static 'metronic_template/js/custom/utilities/modals/create-app.js' %}"></script>
+<script src="{% static 'metronic_template/js/custom/utilities/modals/users-search.js' %}"></script>
+<script src="{% static 'metronic_template/js/order_detail.js' %}"></script>
+<script src="{% static 'metronic_template/js/city_state.js' %}"></script>
+<script type="text/javascript">
+
+</script>
+
+{% endblock js %}

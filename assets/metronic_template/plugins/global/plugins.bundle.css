@@ -334,7 +334,7 @@
 }
 
 .select2-container--default[dir=rtl] .select2-selection--multiple .select2-selection__clear {
-  float: left;
+  float: right;
   margin-left: 10px;
   margin-right: auto;
 }

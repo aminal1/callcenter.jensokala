@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -8,6 +8,10 @@ from django.contrib.auth import authenticate,login
 
 # Create your views here.
 def user_login (request):
+    if request.user.is_authenticated:
+        if request.user.user_type:
+            return redirect ("admindashbord:home_page")
+        
     return render (request,'users_app/login.html')
 
 @api_view(['POST'])

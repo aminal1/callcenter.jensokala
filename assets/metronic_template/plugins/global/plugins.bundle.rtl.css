@@ -334,7 +334,7 @@
 }
 
 .select2-container--default[dir=rtl] .select2-selection--multiple .select2-selection__clear {
-  float: left;
+  float: right;
   margin-left: 10px;
   margin-right: auto;
 }
@@ -33291,7 +33291,7 @@ i[class^=fonticon-]:before, i[class*=" fonticon-"]:before {
 .select2-container--bootstrap5 .select2-dropdown .select2-results__option {
   color: var(--kt-gray-700);
   transition: color 0.2s ease;
-  padding: 0.75rem 1.25rem;
+  padding: 0.75rem 5.25rem;
   margin: 0 0;
 }
 .select2-container--bootstrap5 .select2-dropdown .select2-results__option.select2-results__option--highlighted {

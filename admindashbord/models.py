@@ -46,7 +46,14 @@ class Product (models.Model):
         postalCode = models.CharField(max_length=250,null=True)
         quantity = models.IntegerField(null=True)
 
-
+        def inventory_main(self):
+            number = int(self.inventory)
+            number =  - number 
+            return number
+        def all_price (self):
+            number = int(self.inventory)
+            number =  - number 
+            return number * int(self.price)
 
 class Networker (models.Model):
     refrence_id = models.BigIntegerField (unique=True,primary_key=True)
@@ -82,7 +89,7 @@ class Order (models.Model):
     bayer  = models.ForeignKey(Buyer,on_delete=models.CASCADE,null=True)
     mali = models.ForeignKey(Peyment,on_delete=models.CASCADE,null=True)
     quntity = models.CharField(max_length=200,null=True)
-    networker = models.ForeignKey(Networker,on_delete=models.CASCADE,null=True)
+    networker = models.ForeignKey(Networker,on_delete=models.CASCADE,null=True,related_name="net_order")
     products = models.ManyToManyField(Product)
     done = models.BooleanField(default=False)
     created_main = models.DateTimeField(auto_now_add=False,null=True)
@@ -101,3 +108,12 @@ class Order (models.Model):
     
 
 
+class MainProduct (models.Model):
+    refrence_id = models.BigIntegerField (unique=True,primary_key=True)
+    title = models.CharField(max_length=250,null=True)
+    price = models.CharField(max_length=250,null=True)
+    inventory = models.CharField(max_length=250,null=True)
+    mainimage = models.URLField(null=True)
+    active = models.BooleanField(default=False)
+    code = models.CharField(max_length=250,null=True)
+    postalCode = models.CharField(max_length=250,null=True)
