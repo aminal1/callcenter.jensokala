@@ -26,6 +26,7 @@ urlpatterns = [
     path("change_status_order/<int:order_id>",views.change_status_order,name = "change_status_order"),
     path("change_call_status_order/<int:order_id>",views.change_call_status_order,name = "change_call_status_order"),
     path("create_addres_order/<int:order_id>",views.create_addres_order,name = "create_addres_order"),
+    path("log_out_user",views.log_out_user,name = "log_out_user"),
 
 
 

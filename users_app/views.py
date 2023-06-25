@@ -31,6 +31,8 @@ def api_login (request):
                     login(request,authuser)
                      
                     return Response({"message":"ورود به حساب کاربری با موفقیت انجام شد","redirect_url":"/admindashboard/home_page"},status=status.HTTP_200_OK)
+                else:
+                    return Response({"message":"ورود به حساب کاربری با موفقیت انجام شد","redirect_url":"/CallCenterDashbord/HomePage"})
             else:
                     return Response({"message":" رمز عبور اشتباه است"},status=status.HTTP_400_BAD_REQUEST)
         except :

@@ -24,7 +24,7 @@ def base (request):
 
 
 def get_data (request):
-    with open ("response_1686250644208.json",'r', errors='ignore', encoding='UTF-8') as json_data:
+    with open ("data.json",'r', errors='ignore', encoding='UTF-8') as json_data:
         data = json.load(json_data)
         for item in data:
             new_main_product = MainProduct(
@@ -142,18 +142,18 @@ def get_data (request):
         #         order_object.products.set(products_objects)
 
                 
-        #         a+=1
+                
          
     return HttpResponse({"status":"Fuck"})
 
 
 def delete_object (request):
-    MainProduct.objects.all().delete()
-    # Buyer.objects.all().delete()
-    # Peyment.objects.all().delete()
-    # Product.objects.all().delete()
-    # Networker.objects.all().delete()
-    # Order.objects.all().delete()
+    # MainProduct.objects.all().delete()
+    Buyer.objects.all().delete()
+    Peyment.objects.all().delete()
+    Product.objects.all().delete()
+    Networker.objects.all().delete()
+    Order.objects.all().delete()
     return HttpResponse({"status":"Fuck"})
 
 
@@ -585,3 +585,14 @@ def create_addres_order(request, order_id):
         order_object.bayer.addres.city = city
         order_object.bayer.addres.save()
         return Response(status=status.HTTP_201_CREATED,data={"message":"success"})
+    
+
+
+
+def status_call_list(request):
+    return render(request,"admindashbord/status_call_list.html")
+
+
+def log_out_user(request):
+    logout(request)
+    return redirect('/')

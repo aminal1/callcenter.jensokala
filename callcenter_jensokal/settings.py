@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     "admindashbord",
     "users_app",
     "persian_date",
-    
+    'callc_dashbord',
 ]
 
 MIDDLEWARE = [
